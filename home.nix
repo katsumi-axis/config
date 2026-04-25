@@ -18,7 +18,29 @@
 
   programs.git = {
     enable = true;
+    ignores = [
+      "# macOS"
+      ".DS_Store"
+      ".AppleDouble"
+      ".LSOverride"
+      "._*"
+      ".Spotlight-V100"
+      ".Trashes"
+
+      "# Windows"
+      "Thumbs.db"
+      "ehthumbs.db"
+
+      "# Editor backup and swap files"
+      "*~"
+      "*.swp"
+      "*.swo"
+
+      "# Local development environment"
+      ".envrc"
+    ];
     settings = {
+      core.excludesFile = "~/.config/git/ignore";
       init.defaultBranch = "main";
       pull.rebase = true;
       push.autoSetupRemote = true;
