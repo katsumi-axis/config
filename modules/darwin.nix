@@ -15,7 +15,19 @@
     settings.experimental-features = "nix-command flakes";
   };
 
-  nixpkgs.config.allowUnfree = true;
+  launchd.daemons.nix-daemon.serviceConfig.RunAtLoad = true;
+
+  nixpkgs = {
+    config.allowUnfree = true;
+    overlays = [
+      (final: prev: {
+        direnv = prev.direnv.overrideAttrs (_: {
+          # direnv's zsh test can hang during local darwin-rebuild source builds.
+          doCheck = false;
+        });
+      })
+    ];
+  };
 
   networking.hostName = hostname;
   networking.computerName = hostname;

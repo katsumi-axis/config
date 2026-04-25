@@ -16,6 +16,11 @@
 
   programs.home-manager.enable = true;
 
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+  };
+
   programs.git = {
     enable = true;
     ignores = [
@@ -38,6 +43,7 @@
 
       "# Local development environment"
       ".envrc"
+      ".direnv/"
     ];
     settings = {
       core.excludesFile = "~/.config/git/ignore";
