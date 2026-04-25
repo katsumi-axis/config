@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   home.stateVersion = "25.05";
@@ -68,7 +68,7 @@
       gce = "git commit --allow-empty -m \"make pull request\"";
 
       fig = "docker-compose";
-      dbtf = "/Users/axis/.local/bin/dbt";
+      dbtf = "${config.home.homeDirectory}/.local/bin/dbt";
     };
 
     initContent = ''

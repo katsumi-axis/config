@@ -1,4 +1,10 @@
-{ pkgs, username, homeDirectory, hostname, ... }:
+{
+  pkgs,
+  username,
+  homeDirectory,
+  hostname,
+  ...
+}:
 
 {
   system.stateVersion = 6;
@@ -41,11 +47,19 @@
   system.defaults = {
     dock = {
       autohide = true;
+      persistent-apps = [
+        "/System/Applications/Apps.app"
+        "/Applications/Google Chrome.app"
+        "/Applications/Ghostty.app"
+        "/Applications/Cursor.app"
+        "/Applications/Codex.app"
+      ];
       show-recents = false;
     };
 
     finder = {
       AppleShowAllExtensions = true;
+      CreateDesktop = false;
       FXPreferredViewStyle = "Nlsv";
       ShowPathbar = true;
       ShowStatusBar = true;
@@ -55,6 +69,15 @@
       ApplePressAndHoldEnabled = false;
       InitialKeyRepeat = 15;
       KeyRepeat = 2;
+    };
+
+    CustomUserPreferences = {
+      "com.apple.AppleMultitouchMouse" = {
+        MouseButtonMode = "TwoButton";
+      };
+      "com.apple.driver.AppleBluetoothMultitouch.mouse" = {
+        MouseButtonMode = "TwoButton";
+      };
     };
   };
 
