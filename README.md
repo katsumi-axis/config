@@ -51,8 +51,11 @@ sudo nix --extra-experimental-features 'nix-command flakes' run github:nix-darwi
 7. シェルを開き直して確認する
 
 ```sh
-darwin-rebuild --version
+command -v darwin-rebuild
+nix flake metadata --no-write-lock-file
 ```
+
+`darwin-rebuild` には `--version` オプションがないため、実行ファイルが見つかることと、この flake が参照している `nix-darwin` の revision を確認する。
 
 Home Managerが既存ファイルとの衝突を検出した場合は、対象ファイルを退避してからもう一度適用する。退避ファイルには `.before-home-manager` が付く。
 

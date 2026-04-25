@@ -27,18 +27,14 @@
     fd
     bitwarden-desktop
     chatgpt
-    codex
     gh
     git
     git-lfs
     gnupg
-    karabiner-elements
     jq
     nodejs
     openjdk
     pinentry_mac
-    pnpm
-    raycast
     ripgrep
     uv
     vim
@@ -99,6 +95,9 @@
       "ghostty"
       "notion"
       "unity-hub"
+      "raycast"
+      "codex"
+      "karabiner-elements"
     ];
     masApps = {
       DevCleaner = 1388020431;

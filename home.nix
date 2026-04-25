@@ -8,7 +8,6 @@
     "/opt/homebrew/bin"
     "$HOME/Library/pnpm"
     "$HOME/.local/bin"
-    "$HOME/.antigravity/antigravity/bin"
   ];
 
   home.packages = with pkgs; [
