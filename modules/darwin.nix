@@ -17,11 +17,23 @@
   users.users.${username}.home = homeDirectory;
 
   environment.systemPackages = with pkgs; [
-    git
-    ripgrep
+    biome
     fd
+    gh
+    git
+    git-lfs
+    gnupg
     jq
+    nodejs
+    openjdk
+    pinentry_mac
+    pnpm
+    ripgrep
+    uv
     vim
+    wget
+    zsh
+    cloudflared
   ];
 
   programs.zsh.enable = true;
@@ -49,8 +61,29 @@
   homebrew = {
     enable = true;
     onActivation.cleanup = "none";
-    brews = [ ];
-    casks = [ ];
-    masApps = { };
+    casks = [
+      "android-studio"
+      "bitwarden"
+      "chatgpt"
+      "claude"
+      "cursor"
+      "docker-desktop"
+      "ghostty"
+      "karabiner-elements"
+      "notion"
+      "raycast"
+      "unity-hub"
+      "visual-studio-code"
+      "xcodes-app"
+    ];
+    masApps = {
+      DevCleaner = 1388020431;
+      Keynote = 409183694;
+      Kindle = 302584613;
+      Magnet = 441258766;
+      Numbers = 409203825;
+      Pages = 409201541;
+      Slack = 803453959;
+    };
   };
 }

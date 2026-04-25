@@ -15,7 +15,7 @@
       system = "aarch64-darwin";
       username = "axisa";
       homeDirectory = "/Users/axis";
-      hostname = "axiss-MacBook-Pro-6";
+      hostname = "macbook-pro-m4";
     in
     {
       darwinConfigurations.${hostname} = nix-darwin.lib.darwinSystem {
@@ -29,6 +29,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "before-home-manager";
             home-manager.users.${username} = import ./home.nix;
           }
         ];

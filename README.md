@@ -9,9 +9,9 @@
 ## Apply
 
 ```sh
-nix --extra-experimental-features 'nix-command flakes' run github:nix-darwin/nix-darwin/master#darwin-rebuild -- switch --flake .#axiss-MacBook-Pro-6
+nix --extra-experimental-features 'nix-command flakes' run github:nix-darwin/nix-darwin/master#darwin-rebuild -- switch --flake .#macbook-pro-m4
 ```
 
 ```sh
-darwin-rebuild switch --flake .#axiss-MacBook-Pro-6
+darwin-rebuild switch --flake .#macbook-pro-m4
 ```
