@@ -123,7 +123,7 @@
       zstyle ':vcs_info:*' actionformats '[%b|%a]'
       nix_info() {
         if [[ -n "$IN_NIX_SHELL" ]]; then
-          nix_info_msg="%F{cyan}[nix]%f"
+          nix_info_msg="%F{cyan}[n]%f"
         else
           nix_info_msg=""
         fi
