@@ -100,8 +100,18 @@
       zstyle ':vcs_info:git:*' unstagedstr "%F{red}+"
       zstyle ':vcs_info:*' formats "%F{green}%c%u[%b]%f"
       zstyle ':vcs_info:*' actionformats '[%b|%a]'
-      precmd () { vcs_info }
-      RPROMPT="$RPROMPT\''${vcs_info_msg_0_}"
+      nix_info() {
+        if [[ -n "$IN_NIX_SHELL" ]]; then
+          nix_info_msg="%F{cyan}[nix]%f"
+        else
+          nix_info_msg=""
+        fi
+      }
+      precmd () {
+        vcs_info
+        nix_info
+      }
+      RPROMPT="$RPROMPT\''${nix_info_msg}\''${vcs_info_msg_0_}"
       PROMPT="%{''${fg[green]}%}%* %c ]%{''${reset_color}%} "
 
       chpwd() { ls -GF }
@@ -137,6 +147,23 @@
       gcl() {
         git checkout "$1"
         git branch --merged | egrep -v '\\*|develop|main' | xargs git branch -d
+      }
+
+      nix() {
+        if [[ "$1" == "develop" && -t 0 ]]; then
+          local arg
+          for arg in "$@"; do
+            if [[ "$arg" == "-c" || "$arg" == "--command" ]]; then
+              command nix "$@"
+              return
+            fi
+          done
+
+          command nix "$@" -c "$SHELL"
+          return
+        fi
+
+        command nix "$@"
       }
 
       eval "$(/opt/homebrew/bin/brew shellenv)"

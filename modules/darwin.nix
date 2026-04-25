@@ -25,19 +25,26 @@
   environment.systemPackages = with pkgs; [
     biome
     fd
+    bitwarden-desktop
+    chatgpt
+    codex
     gh
     git
     git-lfs
     gnupg
+    karabiner-elements
     jq
     nodejs
     openjdk
     pinentry_mac
     pnpm
+    raycast
     ripgrep
     uv
     vim
+    vscode
     wget
+    xcodes
     zsh
     cloudflared
   ];
@@ -86,18 +93,12 @@
     onActivation.cleanup = "none";
     casks = [
       "android-studio"
-      "bitwarden"
-      "chatgpt"
       "claude"
       "cursor"
       "docker-desktop"
       "ghostty"
-      "karabiner-elements"
       "notion"
-      "raycast"
       "unity-hub"
-      "visual-studio-code"
-      "xcodes-app"
     ];
     masApps = {
       DevCleaner = 1388020431;
