@@ -10,6 +10,10 @@
     "$HOME/.local/bin"
   ];
 
+  home.sessionVariables = {
+    COCOAPODS_DISABLE_STATS = "1";
+  };
+
   home.packages = with pkgs; [
     tree
   ];

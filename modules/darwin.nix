@@ -36,6 +36,8 @@
 
   environment.systemPackages = with pkgs; [
     biome
+    bundler
+    cocoapods
     fd
     bitwarden-desktop
     chatgpt
@@ -48,11 +50,11 @@
     openjdk
     pinentry_mac
     ripgrep
+    ruby
     uv
     vim
     vscode
     wget
-    xcodes
     zsh
     cloudflared
   ];
@@ -98,7 +100,7 @@
 
   homebrew = {
     enable = true;
-    onActivation.cleanup = "none";
+    onActivation.cleanup = "uninstall";
     casks = [
       "android-studio"
       "claude"
@@ -110,6 +112,10 @@
       "raycast"
       "codex"
       "karabiner-elements"
+      "lm-studio"
+      "notion-calendar"
+      "obsidian"
+      "xcodes-app"
     ];
     masApps = {
       DevCleaner = 1388020431;
