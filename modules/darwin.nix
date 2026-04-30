@@ -32,7 +32,10 @@
   networking.hostName = hostname;
   networking.computerName = hostname;
 
-  users.users.${username}.home = homeDirectory;
+  users.users.${username} = {
+    home = homeDirectory;
+    shell = "/bin/zsh";
+  };
 
   environment.systemPackages = with pkgs; [
     biome
@@ -55,9 +58,13 @@
     vim
     vscode
     wget
-    zsh
+    zed-editor
     cloudflared
   ];
+
+  system.activationScripts.postActivation.text = ''
+    ln -sf ${pkgs.cocoapods}/bin/pod /usr/local/bin/pod
+  '';
 
   programs.zsh.enable = true;
 
