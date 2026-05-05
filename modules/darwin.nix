@@ -41,12 +41,44 @@
     biome
     bundler
     cocoapods
+    dotnet-sdk_8
     fd
     bitwarden-desktop
-    chatgpt
     gh
     git
     git-lfs
+    godot_4-mono
+    (pkgs.runCommand "godot-mono-app" { } ''
+      app="$out/Applications/Godot Mono.app"
+      mkdir -p "$app/Contents/MacOS"
+
+      cat > "$app/Contents/Info.plist" <<EOF
+      <?xml version="1.0" encoding="UTF-8"?>
+      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+      <plist version="1.0">
+      <dict>
+        <key>CFBundleDisplayName</key>
+        <string>Godot Mono</string>
+        <key>CFBundleExecutable</key>
+        <string>godot-mono-launcher</string>
+        <key>CFBundleIdentifier</key>
+        <string>org.godotengine.GodotMono.Nix</string>
+        <key>CFBundleName</key>
+        <string>Godot Mono</string>
+        <key>CFBundlePackageType</key>
+        <string>APPL</string>
+        <key>NSHighResolutionCapable</key>
+        <true/>
+      </dict>
+      </plist>
+      EOF
+
+      cat > "$app/Contents/MacOS/godot-mono-launcher" <<EOF
+      #!${pkgs.bash}/bin/bash
+      exec ${pkgs.godot_4-mono}/bin/godot-mono "\$@"
+      EOF
+      chmod +x "$app/Contents/MacOS/godot-mono-launcher"
+    '')
     gnupg
     jq
     nodejs
@@ -110,6 +142,7 @@
     onActivation.cleanup = "uninstall";
     casks = [
       "android-studio"
+      "chatgpt"
       "claude"
       "cursor"
       "docker-desktop"
@@ -118,6 +151,7 @@
       "unity-hub"
       "raycast"
       "codex"
+      "tradingview"
       "karabiner-elements"
       "lm-studio"
       "notion-calendar"

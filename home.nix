@@ -83,6 +83,7 @@
       glg = "git log --graph --name-status";
       gsta = "git stash";
       gstal = "git stash list";
+      godot = "godot-mono";
       rgsta = "git stash apply";
       gr = "git reset HEAD";
       grhch = "git reset --hard HEAD^";
