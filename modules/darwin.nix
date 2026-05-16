@@ -6,6 +6,41 @@
   ...
 }:
 
+let
+  androidSdk =
+    (pkgs.androidenv.composeAndroidPackages {
+      platformVersions = [
+        "36"
+      ];
+      buildToolsVersions = [
+        "36.0.0"
+      ];
+      platformToolsVersion = "35.0.2";
+      abiVersions = [ "arm64-v8a" ];
+      includeCmake = false;
+      includeEmulator = true;
+      includeNDK = true;
+      ndkVersions = [ "27.1.12297006" ];
+      includeSystemImages = true;
+      systemImageTypes = [ "google_apis_playstore" ];
+    }).androidsdk;
+  androidSdkRoot = "${androidSdk}/libexec/android-sdk";
+  androidSdkDefaultRoot = "${homeDirectory}/Library/Android/sdk";
+  androidSdkTools = pkgs.symlinkJoin {
+    name = "android-sdk-tools";
+    paths = [ androidSdk ];
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      for tool in emulator avdmanager sdkmanager; do
+        if [ -x "$out/bin/$tool" ]; then
+          wrapProgram "$out/bin/$tool" \
+            --set ANDROID_HOME ${androidSdkRoot} \
+            --set ANDROID_SDK_ROOT ${androidSdkRoot}
+        fi
+      done
+    '';
+  };
+in
 {
   system.stateVersion = 6;
   system.primaryUser = username;
@@ -18,7 +53,10 @@
   launchd.daemons.nix-daemon.serviceConfig.RunAtLoad = true;
 
   nixpkgs = {
-    config.allowUnfree = true;
+    config = {
+      allowUnfree = true;
+      android_sdk.accept_license = true;
+    };
     overlays = [
       (final: prev: {
         direnv = prev.direnv.overrideAttrs (_: {
@@ -38,6 +76,8 @@
   };
 
   environment.systemPackages = with pkgs; [
+    androidSdkTools
+    android-tools
     biome
     bundler
     cocoapods
@@ -82,7 +122,6 @@
     gnupg
     jq
     nodejs
-    openjdk
     pinentry_mac
     ripgrep
     ruby
@@ -94,8 +133,26 @@
     cloudflared
   ];
 
+  environment.variables = {
+    ANDROID_HOME = androidSdkDefaultRoot;
+    ANDROID_SDK_ROOT = androidSdkDefaultRoot;
+  };
+
+  environment.systemPath = [
+    "${androidSdkDefaultRoot}/cmdline-tools/latest/bin"
+    "${androidSdkDefaultRoot}/emulator"
+    "${androidSdkDefaultRoot}/platform-tools"
+    "${androidSdkDefaultRoot}/tools/bin"
+  ];
+
   system.activationScripts.postActivation.text = ''
     ln -sf ${pkgs.cocoapods}/bin/pod /usr/local/bin/pod
+
+    android_sdk_default="${homeDirectory}/Library/Android/sdk"
+    mkdir -p "${homeDirectory}/Library/Android"
+    if [ -L "$android_sdk_default" ] || [ ! -e "$android_sdk_default" ]; then
+      ln -sfn ${androidSdkRoot} "$android_sdk_default"
+    fi
   '';
 
   programs.zsh.enable = true;

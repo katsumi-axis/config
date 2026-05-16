@@ -11,6 +11,8 @@
   ];
 
   home.sessionVariables = {
+    ANDROID_HOME = "${config.home.homeDirectory}/Library/Android/sdk";
+    ANDROID_SDK_ROOT = "${config.home.homeDirectory}/Library/Android/sdk";
     COCOAPODS_DISABLE_STATS = "1";
   };
 
