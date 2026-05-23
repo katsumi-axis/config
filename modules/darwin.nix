@@ -169,7 +169,6 @@ in
         "/System/Applications/Apps.app"
         "/Applications/Google Chrome.app"
         "/Applications/Ghostty.app"
-        "/Applications/Cursor.app"
         "/Applications/Codex.app"
       ];
       show-recents = false;
