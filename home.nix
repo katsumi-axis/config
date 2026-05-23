@@ -24,7 +24,7 @@
 
   programs.direnv = {
     enable = true;
-    enableZshIntegration = false;
+    enableZshIntegration = true;
     nix-direnv.enable = true;
   };
 
