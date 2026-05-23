@@ -3,6 +3,8 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    # Keep Bitwarden on a known-good Darwin build until nixpkgs-unstable fixes its clang/libc++ mismatch.
+    nixpkgs-bitwarden.url = "github:NixOS/nixpkgs/01fbdeef22b76df85ea168fbfe1bfd9e63681b30";
     nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager/master";
@@ -13,6 +15,7 @@
     {
       self,
       nixpkgs,
+      nixpkgs-bitwarden,
       nix-darwin,
       home-manager,
       ...
@@ -31,7 +34,12 @@
         nix-darwin.lib.darwinSystem {
           inherit system;
           specialArgs = {
-            inherit username homeDirectory hostname;
+            inherit
+              username
+              homeDirectory
+              hostname
+              nixpkgs-bitwarden
+              ;
           };
           modules = [
             ./modules/darwin.nix

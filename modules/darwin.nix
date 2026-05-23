@@ -3,10 +3,15 @@
   username,
   homeDirectory,
   hostname,
+  nixpkgs-bitwarden,
   ...
 }:
 
 let
+  bitwardenPkgs = import nixpkgs-bitwarden {
+    system = pkgs.stdenv.hostPlatform.system;
+    config.allowUnfree = true;
+  };
   androidSdk =
     (pkgs.androidenv.composeAndroidPackages {
       platformVersions = [
@@ -83,7 +88,7 @@ in
     cocoapods
     dotnet-sdk_8
     fd
-    bitwarden-desktop
+    bitwardenPkgs.bitwarden-desktop
     gh
     git
     git-lfs
