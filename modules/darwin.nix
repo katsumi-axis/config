@@ -262,11 +262,8 @@ in
     masApps = {
       Amphetamine = 937984704;
       DevCleaner = 1388020431;
-      Keynote = 409183694;
       Kindle = 302584613;
       Magnet = 441258766;
-      Numbers = 409203825;
-      Pages = 409201541;
       Slack = 803453959;
     };
   };
