@@ -27,6 +27,10 @@
           username = "axis";
           homeDirectory = "/Users/axis";
         };
+        macbook-air-m1 = {
+          username = "decima";
+          homeDirectory = "/Users/decima";
+        };
       };
       mkDarwinConfiguration =
         hostname:

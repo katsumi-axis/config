@@ -78,7 +78,7 @@ in
 
   users.users.${username} = {
     home = homeDirectory;
-    shell = "/bin/zsh";
+    shell = pkgs.zsh;
   };
 
   environment.systemPackages = with pkgs; [
@@ -195,7 +195,7 @@ in
     dock = {
       autohide = true;
       persistent-apps = [
-        "/System/Applications/Apps.app"
+        "/System/Applications/Launchpad.app"
         "/Applications/Google Chrome.app"
         "/Applications/Ghostty.app"
         "/Applications/Codex.app"
@@ -251,6 +251,7 @@ in
       "unity-hub"
       "raycast"
       "codex"
+      "codex-app"
       "tradingview"
       "karabiner-elements"
       "lm-studio"
