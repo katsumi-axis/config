@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   username,
   homeDirectory,
@@ -129,7 +130,10 @@ in
     nodejs
     pinentry_mac
     ripgrep
+    cargo
     ruby
+    rustc
+    rustup
     uv
     vim
     vscode
@@ -143,6 +147,11 @@ in
     ANDROID_SDK_ROOT = androidSdkDefaultRoot;
   };
 
+  launchd.user.envVariables.PATH = [
+    "${homeDirectory}/.cargo/bin"
+    config.environment.systemPath
+  ];
+
   environment.systemPath = [
     "${androidSdkDefaultRoot}/cmdline-tools/latest/bin"
     "${androidSdkDefaultRoot}/emulator"
@@ -150,8 +159,25 @@ in
     "${androidSdkDefaultRoot}/tools/bin"
   ];
 
+  system.activationScripts.preActivation.text = ''
+    if [ -x /opt/homebrew/bin/brew ]; then
+      sudo --user=${username} --set-home /opt/homebrew/bin/brew trust --tap runpod/runpodctl
+    fi
+  '';
+
   system.activationScripts.postActivation.text = ''
     ln -sf ${pkgs.cocoapods}/bin/pod /usr/local/bin/pod
+
+    rustup="${pkgs.rustup}/bin/rustup"
+    if [ -x "$rustup" ]; then
+      if ! sudo -u ${username} env HOME="${homeDirectory}" "$rustup" toolchain list | grep -q '^stable'; then
+        sudo -u ${username} env HOME="${homeDirectory}" "$rustup" toolchain install stable --no-self-update
+      fi
+      sudo -u ${username} env HOME="${homeDirectory}" "$rustup" default stable
+      if ! sudo -u ${username} env HOME="${homeDirectory}" "$rustup" target list --installed | grep -q '^wasm32-wasip1$'; then
+        sudo -u ${username} env HOME="${homeDirectory}" "$rustup" target add wasm32-wasip1
+      fi
+    fi
 
     android_sdk_default="${homeDirectory}/Library/Android/sdk"
     mkdir -p "${homeDirectory}/Library/Android"
@@ -160,7 +186,10 @@ in
     fi
   '';
 
-  programs.zsh.enable = true;
+  programs.zsh = {
+    enable = true;
+    enableCompletion = false;
+  };
 
   system.defaults = {
     dock = {
@@ -201,13 +230,23 @@ in
   homebrew = {
     enable = true;
     onActivation.cleanup = "uninstall";
+    onActivation.extraFlags = [ "--force-cleanup" ];
+    taps = [
+      "runpod/runpodctl"
+    ];
+    brews = [
+      "runpodctl"
+      "visidata"
+    ];
     casks = [
       "android-studio"
+      "blender"
       "chatgpt"
       "claude"
       "cursor"
       "docker-desktop"
       "ghostty"
+      "google-chrome"
       "notion"
       "unity-hub"
       "raycast"
@@ -217,9 +256,11 @@ in
       "lm-studio"
       "notion-calendar"
       "obsidian"
+      "tailscale-app"
       "xcodes-app"
     ];
     masApps = {
+      Amphetamine = 937984704;
       DevCleaner = 1388020431;
       Keynote = 409183694;
       Kindle = 302584613;
