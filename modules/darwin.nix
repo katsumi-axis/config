@@ -195,7 +195,7 @@ in
     dock = {
       autohide = true;
       persistent-apps = [
-        "/System/Applications/Launchpad.app"
+        "/System/Applications/Apps.app"
         "/Applications/Google Chrome.app"
         "/Applications/Ghostty.app"
         "/Applications/Codex.app"

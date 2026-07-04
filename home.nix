@@ -49,7 +49,6 @@
       "*.swo"
 
       "# Local development environment"
-      ".envrc"
       ".direnv/"
     ];
     settings = {
