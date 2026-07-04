@@ -235,6 +235,7 @@ in
       "runpod/runpodctl"
     ];
     brews = [
+      "duckdb"
       "runpodctl"
       "visidata"
     ];
