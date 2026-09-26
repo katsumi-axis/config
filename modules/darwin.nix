@@ -194,7 +194,7 @@ in
         "/System/Applications/Apps.app"
         "/Applications/Google Chrome.app"
         "/Applications/Ghostty.app"
-        "/Applications/Codex.app"
+        "/Applications/ChatGPT.app"
       ];
       show-recents = false;
     };
