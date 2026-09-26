@@ -4,15 +4,10 @@
   username,
   homeDirectory,
   hostname,
-  nixpkgs-bitwarden,
   ...
 }:
 
 let
-  bitwardenPkgs = import nixpkgs-bitwarden {
-    system = pkgs.stdenv.hostPlatform.system;
-    config.allowUnfree = true;
-  };
   androidSdk =
     (pkgs.androidenv.composeAndroidPackages {
       platformVersions = [
@@ -21,7 +16,7 @@ let
       buildToolsVersions = [
         "36.0.0"
       ];
-      platformToolsVersion = "35.0.2";
+      platformToolsVersion = "37.0.1";
       abiVersions = [ "arm64-v8a" ];
       includeCmake = false;
       includeEmulator = true;
@@ -53,6 +48,7 @@ in
 
   nix = {
     enable = true;
+    package = pkgs.nixVersions.latest;
     settings.experimental-features = "nix-command flakes";
   };
 
@@ -89,7 +85,7 @@ in
     cocoapods
     dotnet-sdk_8
     fd
-    bitwardenPkgs.bitwarden-desktop
+    bitwarden-desktop
     gh
     git
     git-lfs
