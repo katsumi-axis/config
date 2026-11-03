@@ -4,7 +4,6 @@
 
 - `flake.nix`: nix-darwinとHome Managerの入口
 - `modules/darwin.nix`: macOS全体の設定
-- `modules/security-updates.nix`: セキュリティ修正版の差し替えと.NET SDKの併用設定
 - `home.nix`: ユーザー設定
 
 ## Initial setup on a new Mac
