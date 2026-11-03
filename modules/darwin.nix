@@ -43,6 +43,8 @@ let
   };
 in
 {
+  imports = [ ./security-updates.nix ];
+
   system.stateVersion = 6;
   system.primaryUser = username;
 
@@ -83,7 +85,6 @@ in
     biome
     bundler
     cocoapods
-    dotnet-sdk_8
     fd
     bitwarden-desktop
     gh
@@ -123,7 +124,6 @@ in
     '')
     gnupg
     jq
-    nodejs
     pinentry_mac
     ripgrep
     cargo
@@ -157,6 +157,7 @@ in
 
   system.activationScripts.preActivation.text = ''
     if [ -x /opt/homebrew/bin/brew ]; then
+      sudo --user=${username} --set-home /opt/homebrew/bin/brew trust --tap getsentry/tools
       sudo --user=${username} --set-home /opt/homebrew/bin/brew trust --tap runpod/runpodctl
     fi
   '';
@@ -228,10 +229,12 @@ in
     onActivation.cleanup = "uninstall";
     onActivation.extraFlags = [ "--force-cleanup" ];
     taps = [
+      "getsentry/tools"
       "runpod/runpodctl"
     ];
     brews = [
       "duckdb"
+      "getsentry/tools/sentry"
       "runpodctl"
       "visidata"
     ];
@@ -252,6 +255,7 @@ in
       "tradingview"
       "karabiner-elements"
       "lm-studio"
+      "mongodb-compass"
       "notion-calendar"
       "obsidian"
       "tailscale-app"
