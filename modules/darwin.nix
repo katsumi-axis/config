@@ -91,6 +91,7 @@ in
 
   environment.systemPackages = with pkgs; [
     nodejs_24
+    pnpm
     # Prefer .NET 10 LTS while retaining the patched .NET 8 SDK for existing projects.
     (pkgs.dotnetCorePackages.combinePackages [
       pkgs.dotnetCorePackages.sdk_10_0-bin
